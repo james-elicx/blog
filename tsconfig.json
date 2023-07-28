@@ -21,7 +21,6 @@
     "module": "esnext",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "verbatimModuleSyntax": false,
     "jsx": "preserve",
 
     "exactOptionalPropertyTypes": false,
