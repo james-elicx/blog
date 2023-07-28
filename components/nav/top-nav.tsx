@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { GithubLogo, TwitterLogo } from '@/components';
+import { GithubLogo, TwitterLogo } from '../icons';
 import { ThemeToggle } from '../providers';
 
 export const TopNav = () => (

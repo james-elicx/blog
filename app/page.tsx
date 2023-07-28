@@ -1,7 +1,7 @@
+import Link from 'next/link';
 import { IntlDate, Section } from '@/components';
 import { getRecentPosts } from '@/utils/blog';
 import { getProjects } from '@/utils/projects';
-import Link from 'next/link';
 
 const Page = async () => {
   const recentPosts = await getRecentPosts();

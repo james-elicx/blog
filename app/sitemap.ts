@@ -1,5 +1,5 @@
+import type { MetadataRoute } from 'next';
 import { getAllPosts } from '@/utils/blog';
-import { MetadataRoute } from 'next';
 
 const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
   const baseUrl = process.env.BASE_URL;

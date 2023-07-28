@@ -10,6 +10,7 @@ export const ThemeToggle = () => {
 
   return (
     <button
+      type="button"
       title="Toggle theme"
       className="text-primary transition-all hover:text-accent dark:text-primary-dark dark:hover:text-accent-dark"
       onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}

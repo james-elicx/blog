@@ -1,7 +1,7 @@
+import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import { ThemeProvider, TopNav } from '@/components';
 import './globals.css';
-import type { Metadata } from 'next';
 
 const TASAOrbiterText = localFont({
   variable: '--font-tasa-orbiter-text',

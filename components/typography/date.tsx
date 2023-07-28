@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 type Props = React.HTMLAttributes<HTMLSpanElement> & { date: Date };
 
