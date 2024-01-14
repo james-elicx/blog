@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+
 import { getAllSlugs, getBySlug } from '@/utils/blog';
 
 type Props = { params: { slug: string } };

@@ -1,6 +1,7 @@
-import { compileMDX } from 'next-mdx-remote/rsc';
-import { readFileSync, readdirSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+
+import { compileMDX } from 'next-mdx-remote/rsc';
 
 const postsDir = resolve('posts');
 

@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next';
+
 import { getAllPosts } from '@/utils/blog';
 
 const sitemap = async (): Promise<MetadataRoute.Sitemap> => {

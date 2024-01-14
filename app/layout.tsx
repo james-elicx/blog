@@ -1,7 +1,11 @@
-import type { Metadata } from 'next';
+import './tailwind.css';
+
 import localFont from 'next/font/local';
-import { ThemeProvider, TopNav } from '@/components';
-import './globals.css';
+import Link from 'next/link';
+
+import type { Metadata } from 'next';
+
+import { GithubLogo, ThemeProvider, ThemeToggle, TopNav, TwitterLogo } from '@/components';
 
 const TASAOrbiterText = localFont({
   variable: '--font-tasa-orbiter-text',
@@ -42,7 +46,25 @@ const Layout = ({ children }: Props) => (
   <html lang="en">
     <body className={TASAOrbiterText.variable}>
       <ThemeProvider attribute="data-theme" defaultTheme="dark">
-        <TopNav />
+        <TopNav.Root>
+          <TopNav.Section>
+            <Link href="/" className="text-lg font-semibold">
+              James
+            </Link>
+          </TopNav.Section>
+
+          <TopNav.Section>
+            <Link title="GitHub" target="_blank" href="https://github.com/james-elicx">
+              <GithubLogo size={28} />
+            </Link>
+
+            <Link title="Twitter" target="_blank" href="https://twitter.com/james_elicx">
+              <TwitterLogo size={28} />
+            </Link>
+
+            <ThemeToggle />
+          </TopNav.Section>
+        </TopNav.Root>
 
         {children}
       </ThemeProvider>
