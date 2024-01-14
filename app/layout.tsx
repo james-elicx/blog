@@ -47,13 +47,13 @@ const Layout = ({ children }: Props) => (
     <body className={TASAOrbiterText.variable}>
       <ThemeProvider attribute="data-theme" defaultTheme="dark">
         <TopNav.Root>
-          <TopNav.Section>
-            <Link href="/" className="text-lg font-semibold">
+          <TopNav.Section gap={6}>
+            <Link href="/" className="text-lg font-semibold" prefetch={false}>
               James
             </Link>
           </TopNav.Section>
 
-          <TopNav.Section>
+          <TopNav.Section gap={2}>
             <Link title="GitHub" target="_blank" href="https://github.com/james-elicx">
               <GithubLogo size={28} />
             </Link>

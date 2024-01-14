@@ -17,15 +17,22 @@ const Page = async () => {
           {recentPosts.length ? (
             recentPosts.map((post) => (
               <div key={post.slug} className="flex flex-col">
-                <div className="flex flex-row justify-between max-xs:flex-col-reverse">
-                  <Link href={`/blog/${post.slug}`} className="font-semibold">
+                <div className="flex flex-row items-center justify-between max-xs:flex-col-reverse">
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="text-lg font-semibold"
+                    prefetch={false}
+                  >
                     {post.title}
                   </Link>
 
-                  <IntlDate date={post.createdAt} className="text-sm" />
+                  <IntlDate
+                    date={post.createdAt}
+                    className="text-sm text-secondary/80 dark:text-secondary-dark/80"
+                  />
                 </div>
 
-                <span className="truncate text-sm">{post.description}</span>
+                <span className="text-base">{post.description}</span>
               </div>
             ))
           ) : (

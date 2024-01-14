@@ -19,31 +19,31 @@
   h4,
   h5,
   h6 {
-    @apply font-bold text-primary dark:text-primary-dark;
+    @apply font-semibold text-primary dark:text-primary-dark;
   }
 
   h1 {
-    @apply text-4xl;
-  }
-
-  h2 {
-    @apply text-3xl;
-  }
-
-  h3 {
     @apply text-2xl;
   }
 
-  h4 {
+  h2 {
     @apply text-xl;
   }
 
-  h5 {
+  h3 {
     @apply text-lg;
   }
 
-  h6 {
+  h4 {
+    @apply text-lg;
+  }
+
+  h5 {
     @apply text-base;
+  }
+
+  h6 {
+    @apply text-sm;
   }
 
   svg {
@@ -52,5 +52,18 @@
 
   a {
     @apply text-primary transition-all hover:text-accent dark:text-primary-dark dark:hover:text-accent-dark;
+  }
+
+  ol,
+  ul {
+    @apply list-inside pl-4;
+  }
+
+  ul {
+    @apply list-disc;
+  }
+
+  ol {
+    @apply list-decimal;
   }
 }
