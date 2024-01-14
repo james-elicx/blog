@@ -13,28 +13,37 @@
 }
 
 @layer components {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-semibold text-primary dark:text-primary-dark;
+  }
+
   h1 {
-    @apply text-4xl font-bold text-primary dark:text-primary-dark;
+    @apply text-2xl;
   }
 
   h2 {
-    @apply text-3xl font-bold text-primary dark:text-primary-dark;
+    @apply text-xl;
   }
 
   h3 {
-    @apply text-2xl font-bold text-primary dark:text-primary-dark;
+    @apply text-lg;
   }
 
   h4 {
-    @apply text-xl font-bold text-primary dark:text-primary-dark;
+    @apply text-lg;
   }
 
   h5 {
-    @apply text-lg font-bold text-primary dark:text-primary-dark;
+    @apply text-base;
   }
 
   h6 {
-    @apply text-base font-bold text-primary dark:text-primary-dark;
+    @apply text-sm;
   }
 
   svg {
@@ -43,5 +52,18 @@
 
   a {
     @apply text-primary transition-all hover:text-accent dark:text-primary-dark dark:hover:text-accent-dark;
+  }
+
+  ol,
+  ul {
+    @apply list-inside pl-4;
+  }
+
+  ul {
+    @apply list-disc;
+  }
+
+  ol {
+    @apply list-decimal;
   }
 }

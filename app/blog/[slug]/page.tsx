@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+
+import { IntlDate } from '@/components';
 import { getAllSlugs, getBySlug } from '@/utils/blog';
 
 type Props = { params: { slug: string } };
@@ -21,9 +23,21 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
 };
 
 const Page = async ({ params }: Props) => {
-  const { content } = await getBySlug(params.slug);
+  const { content, meta } = await getBySlug(params.slug);
 
-  return <main>{content}</main>;
+  return (
+    <>
+      <div className="flex flex-col gap-1">
+        <h1>{meta.title}</h1>
+
+        <div className="flex flex-row justify-between text-sm text-secondary/80 dark:text-secondary-dark/80">
+          <IntlDate date={meta.updatedAt} />
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-4">{content}</div>
+    </>
+  );
 };
 
 export const dynamicParams = false;

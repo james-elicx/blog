@@ -1,3 +1,3 @@
 'use client';
 
-export { GithubLogo, TwitterLogo, Moon, Sun } from '@phosphor-icons/react';
+export { GithubLogo, Moon, Sun, TwitterLogo } from '@phosphor-icons/react';

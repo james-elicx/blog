@@ -1,6 +1,11 @@
-import { compileMDX } from 'next-mdx-remote/rsc';
-import { readFileSync, readdirSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+
+import { cache } from 'react';
+
+import { compileMDX } from 'next-mdx-remote/rsc';
+
+import { mdxComponents } from '@/components/mdx';
 
 const postsDir = resolve('posts');
 
@@ -11,10 +16,11 @@ export const getAllSlugs = () =>
     .filter((path) => /\.mdx?$/.test(path))
     .map((path) => ({ slug: path.replace(/\.mdx$/, '') }));
 
-export const getBySlug = async (slug: string) => {
+export const getBySlug = cache(async (slug: string) => {
   const { frontmatter, content } = await compileMDX<Frontmatter>({
     source: readFileSync(resolve(postsDir, `${slug}.mdx`), 'utf8'),
     options: { parseFrontmatter: true },
+    components: mdxComponents,
   });
 
   return {
@@ -26,7 +32,7 @@ export const getBySlug = async (slug: string) => {
     },
     content,
   };
-};
+});
 
 export const getAllPosts = async () =>
   Promise.all(getAllSlugs().map(({ slug }) => getBySlug(slug)));
