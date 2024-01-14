@@ -25,7 +25,6 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "beta",
     "@cloudflare/workers-types": "^4.20231218.0",
     "@tsconfig/strictest": "^2.0.1",
     "@types/node": "^20.4.4",
