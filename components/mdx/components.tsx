@@ -1,5 +1,8 @@
 import type { MDXRemoteProps } from 'next-mdx-remote/rsc';
 
+import { ApiCallResponse } from './api-call-response';
+import { Code } from './code';
+
 export const mdxComponents: MDXRemoteProps['components'] = {
   Image: ({ skipAspectRatioProp, ...props }) => (
     <div
@@ -30,15 +33,11 @@ export const mdxComponents: MDXRemoteProps['components'] = {
       {children}
     </div>
   ),
-  code: (props) => (
-    <code
-      className="rounded-md border-2 border-accent/30 bg-secondary/30 px-1 py-0.5 font-mono text-sm transition-colors hover:border-accent/50 dark:border-accent-dark/30 dark:bg-secondary-dark/30 dark:hover:border-accent-dark/50"
-      {...props}
-    />
-  ),
+  code: (props) => <Code isInline {...props} />,
   h2: ({ children, ...props }) => (
     <h2 className="mt-2" {...props}>
       {children}
     </h2>
   ),
+  ApiCallResponse,
 };

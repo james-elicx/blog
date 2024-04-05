@@ -19,6 +19,9 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
       modifiedTime: `${meta.updated_at}`,
       authors: meta.author,
     },
+    robots: {
+      index: !meta.hidden,
+    },
   };
 };
 

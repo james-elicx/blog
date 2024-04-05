@@ -1,0 +1,25 @@
+---
+title: Skew Protection with Cloudflare Snippets
+description: TODO.
+author: James
+created_at: 2024-04-05T20:15:07Z
+updated_at: 2024-04-05T20:15:07Z
+hidden: true
+---
+
+<ApiCallResponse
+  options={[
+    {
+      label: 'Get Current Deployment Info',
+      method: 'get',
+      endpoint: '/api/deployment-id',
+      useDeploymentId: true,
+    },
+    {
+      label: 'Get Past Deployment Info',
+      method: 'get',
+      endpoint: '/api/deployment-id',
+      headers: { 'x-deployment-id': 'DEV-ID' },
+    },
+  ]}
+/>
