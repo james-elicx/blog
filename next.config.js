@@ -10,7 +10,15 @@
 //   // CREATE TABLE IF NOT EXISTS pageviews (path TEXT PRIMARY KEY, views INTEGER DEFAULT 0);
 // }
 
+const getDeploymentId = () => {
+  if (process.env.CF_PAGES_URL) {
+    return new URL(process.env.CF_PAGES_URL).hostname.replace('.pages.dev', '');
+  }
+};
+
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  deploymentId: getDeploymentId(),
+};
 
 module.exports = nextConfig;
