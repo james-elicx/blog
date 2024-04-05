@@ -29,7 +29,7 @@ export const mdxComponents: MDXRemoteProps['components'] = {
     </div>
   ),
   InlineGroup: ({ children, ...props }) => (
-    <div className="flex w-full flex-row items-center gap-4" {...props}>
+    <div className="flex w-full flex-row flex-wrap items-center gap-4" {...props}>
       {children}
     </div>
   ),

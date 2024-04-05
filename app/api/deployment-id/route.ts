@@ -1,8 +1,8 @@
 export const GET = () =>
   new Response(
     JSON.stringify({
-      deploymentId: process.env.NEXT_DEPLOYMENT_ID,
-      deploymentTimestamp: Date.now(),
+      id: process.env.NEXT_DEPLOYMENT_ID,
+      timestamp: Date.now(),
     }),
   );
 

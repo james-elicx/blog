@@ -39,7 +39,7 @@ export const ApiCallResponse = ({ options }: Props) => {
   };
 
   return (
-    <div className="flex flex-col items-start gap-2">
+    <div className="flex min-w-fit flex-grow basis-0 flex-col items-start gap-2">
       <div className="flex flex-row flex-wrap gap-x-8 gap-y-2">
         {options.map((option) => (
           <button
