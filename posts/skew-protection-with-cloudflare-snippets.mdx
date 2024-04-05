@@ -11,10 +11,11 @@ hidden: true
   <ApiCallResponse
     options={[
       {
-        label: 'Get Current Deployment Info',
+        label: 'Get Current Build Info',
         method: 'get',
         endpoint: '/api/deployment-id',
         useDeploymentId: true,
+        terminator: '\r ',
       },
     ]}
   />
@@ -22,10 +23,11 @@ hidden: true
   <ApiCallResponse
     options={[
       {
-        label: 'Get Past Deployment Info',
+        label: 'Get Older Build Info',
         method: 'get',
         endpoint: '/api/deployment-id',
-        headers: { 'x-deployment-id': 'DEV-ID' },
+        headers: { 'x-deployment-id': 'NzIxMjgwODguYmxvZy0zMHg=' },
+        terminator: '\r ',
       },
     ]}
   />

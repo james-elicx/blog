@@ -10,6 +10,7 @@ type Option = {
   method: string;
   useDeploymentId?: boolean;
   headers?: Record<string, string>;
+  terminator?: string;
 };
 
 type Props = {
@@ -20,7 +21,13 @@ export const ApiCallResponse = ({ options }: Props) => {
   const [data, setData] = useState<string>('No response yet.');
   const [loading, setLoading] = useState(false);
 
-  const fetchData = async ({ endpoint, method, headers, useDeploymentId }: Option) => {
+  const fetchData = async ({
+    endpoint,
+    method,
+    headers,
+    useDeploymentId,
+    terminator = '\t',
+  }: Option) => {
     setLoading(true);
 
     const resp = await fetch(endpoint, {
@@ -35,7 +42,7 @@ export const ApiCallResponse = ({ options }: Props) => {
     const respJson = await resp.json();
 
     setLoading(false);
-    setData(JSON.stringify(respJson, null, '\t'));
+    setData(JSON.stringify(respJson, null, terminator));
   };
 
   return (
