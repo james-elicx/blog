@@ -12,7 +12,9 @@
 
 const getDeploymentId = () => {
   if (process.env.CF_PAGES_URL) {
-    return new URL(process.env.CF_PAGES_URL).hostname.replace('.pages.dev', '');
+    const { hostname } = new URL(process.env.CF_PAGES_URL);
+    return btoa(hostname.replace('.pages.dev', ''));
+    // OR, one can do: `return hostname.split('.')[0];`
   }
 };
 
