@@ -36,4 +36,14 @@ export const getProjects = (): Project[] => [
     href: 'https://github.com/iron-auth/iron-auth',
     desc: 'A modular, edge-first authentication library, built to be framework agnostic.',
   },
+  {
+    name: 'go-utils',
+    href: 'https://github.com/james-elicx/go-utils',
+    desc: 'Various utility functions for use in Go projects and when writing tests.',
+  },
+  {
+    name: 'ethereum blockchain explorer',
+    href: 'https://etherexplorer.io',
+    desc: 'View information about wallets, transactions, and blocks on the Ethereum blockchain.',
+  },
 ];
