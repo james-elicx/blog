@@ -18,6 +18,10 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
       publishedTime: `${meta.created_at}`,
       modifiedTime: `${meta.updated_at}`,
       authors: meta.author,
+      images: meta.ogImage && { url: meta.ogImage },
+    },
+    robots: {
+      index: !meta.hidden,
     },
   };
 };

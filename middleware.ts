@@ -16,5 +16,5 @@ export const middleware = (req: NextRequest, event: NextFetchEvent) => {
 };
 
 export const config = {
-  matcher: ['/blog/:slug*'],
+  matcher: ['/blog/:slug*', '/api/:slug*'],
 };

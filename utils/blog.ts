@@ -29,13 +29,16 @@ export const getBySlug = cache(async (slug: string) => {
       createdAt: coerceDate(frontmatter.created_at),
       updatedAt: coerceDate(frontmatter.updated_at),
       slug,
+      ogImage: frontmatter.og_image,
     },
     content,
   };
 });
 
 export const getAllPosts = async () =>
-  Promise.all(getAllSlugs().map(({ slug }) => getBySlug(slug)));
+  (await Promise.all(getAllSlugs().map(({ slug }) => getBySlug(slug)))).filter(
+    (post) => !post.meta.hidden,
+  );
 
 export const getRecentPosts = async (count = 5) => {
   const posts = await getAllPosts();
@@ -52,4 +55,6 @@ type Frontmatter = {
   author: string;
   created_at: Date;
   updated_at: Date;
+  hidden?: boolean;
+  og_image?: string;
 };
