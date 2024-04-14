@@ -1,17 +1,128 @@
 ---
 title: Skew Protection with Cloudflare Snippets
-description: TODO.
+description: Learn how to use Cloudflare Snippets to keep the client and server in sync, and prevent version skew for your Pages deployments.
 author: James
-created_at: 2024-04-05T20:15:07Z
-updated_at: 2024-04-05T20:15:07Z
-hidden: true
+created_at: 2024-04-06T09:15:07Z
+updated_at: 2024-04-06T09:15:07Z
+og_image: /images/skew-protection-with-cloudflare-snippets/0-og-image.png
 ---
 
-<InlineGroup>
+Version skew is a common problem that can occur when you deploy a new version of your application and your users are still on an older version. Your server is running one version of your website, and your users are interacting with another.
+
+In the new build, there might have been changes that alter the way parts of the website work, but the version of the website that a user is using might not support these changes. If a user is filling out a form, for example, they might see an error message when trying to submit something that they would have expected to work.
+
+## Version Locking
+
+One way of dealing with this is to _lock_ the version on the client with a version on the server.
+
+In traditional deployments, you would only run one instance of an application at a time. With serverless deployments, however, any historical deployment of a website is available - even if it is not the most recent version.
+
+We just need to make sure that the client's requests are able to access the correct historical deployment.
+
+## Solving the Problem with Cloudflare Snippets and Pages
+
+[Snippets](https://developers.cloudflare.com/rules/snippets) are part of the Cloudflare Rules offering and can run small pieces of code for incoming requests. This is useful for a variety of things, such as modifying headers, forms of validation, redirects, and more.
+
+In order to write a Snippet that can point our requests to the correct deployment, we need a way to first determine which deployment to use. This is where Pages comes in. Cloudflare Pages is a platform for hosting full-stack and static websites. When you create a Pages project that integrates with a Git repository, it automatically builds and deploys your application whenever you push changes. Each deployment has a unique ID that forms part of the URL.
+
+The build process for the Pages Git integration exposes the URL for a given deployment as an environment variable at build-time. We can use this variable to figure out which ID our build should store, and then later re-use that ID to point our requests to the correct deployment.
+
+### Setting a Deployment ID in a Build
+
+This article will be looking at Next.js, but the same principles apply to any framework that supports deployment IDs.
+
+Pages deployment URLs are in the format `https://<hash>.<project-name>.pages.dev`, where `<hash>` is a unique hash for the deployment and `<project-name>` is the name of your project.
+
+We are going to extract the `<hash>.<project-name>` part of the URL and use the base64 encoded version as a deployment ID for out Next.js app.
+
+```ts
+const getDeploymentId = () => {
+  if (!process.env.CF_PAGES_URL) return undefined;
+
+  const { hostname } = new URL(process.env.CF_PAGES_URL);
+  return btoa(hostname.replace('.pages.dev', ''));
+};
+```
+
+To set the deployment ID in our app so that it's used in requests, we need to call this function in our Next.js config file.
+
+```ts
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  deploymentId: getDeploymentId(),
+};
+```
+
+And that's it! Our Next.js app will now use the deployment ID that we set in the build process, when it builds the app through the Pages Git integration.
+
+### Setting up the Snippet
+
+It's time to [create](https://developers.cloudflare.com/rules/snippets/create-dashboard/) a new Snippet that will redirect requests to the correct deployment.
+
+Head over to the Cloudflare dashboard and navigate to your domain's Rules section, then head to Snippets. Alternatively, [click this link](https://dash.cloudflare.com/?to=/:account/:zone/rules/snippets/create/code) to be taken directly to the Snippets creation page.
+
+<Image
+  src="/images/skew-protection-with-cloudflare-snippets/1-add-snippet.png"
+  alt="Create a new Snippet in the Cloudflare dashboard and give it a name."
+  width={1420}
+  height={620}
+/>
+
+We can now write the code for our Snippet. The logic that we need to do is rather simple.
+
+It will check the request headers for an `x-deployment-id` header, and if it finds one, it will use that to redirect the request to the correct deployment. We can also use the `dpl` query parameter to specify the deployment ID.
+
+If we don't find a deployment ID, it will continue with the request as normal.
+
+```ts
+export default {
+  async fetch(req) {
+    const url = new URL(req.url);
+
+    const deploymentId =
+      req.headers.get('x-deployment-id') || url.searchParams.get('dpl');
+
+    if (deploymentId) {
+      url.hostname = `${atob(deploymentId)}.pages.dev`;
+      return fetch(url.href, req);
+    }
+
+    return fetch(req);
+  },
+};
+```
+
+Both the request header and the query parameter are ways that Next.js uses to specify the deployment ID.
+
+From there, we can click the button to continue to add a rule for our Snippet.
+
+As we want our Snippet to be applied to all incoming requests to our domain, we can just select the all requests option, give it a name, and click the button to save it.
+
+<Image
+  src="/images/skew-protection-with-cloudflare-snippets/2-configure-snippet.png"
+  alt="Configure the Snippet to be applied to all requests."
+  width={1184}
+  height={932}
+/>
+
+Click save and deploy and your Snippet is now live!
+
+<Image
+  src="/images/skew-protection-with-cloudflare-snippets/3-live-snippet.png"
+  alt="The Snippet is now live and is being applied to all requests."
+  width={2174}
+  height={454}
+/>
+
+## See it in Action
+
+The following buttons make requests to an API endpoint that is statically generated at build-time - it contains the deployment ID and timestamp for the build.
+
+<InlineGroup shouldAlignToStart>
   <ApiCallResponse
     options={[
       {
-        label: 'Get Current Build Info',
+        label: "Get Current Build's Info",
         method: 'get',
         endpoint: '/api/deployment-id',
         useDeploymentId: true,
@@ -23,7 +134,7 @@ hidden: true
   <ApiCallResponse
     options={[
       {
-        label: 'Get Older Build Info',
+        label: "Get Older Build's Info",
         method: 'get',
         endpoint: '/api/deployment-id',
         headers: { 'x-deployment-id': 'NzIxMjgwODguYmxvZy0zMHg=' },
@@ -32,3 +143,5 @@ hidden: true
     ]}
   />
 </InlineGroup>
+
+The first one fetches the info for the deployment that you are currently viewing, and the second one fetches the info for a hard-coded historical deployment.

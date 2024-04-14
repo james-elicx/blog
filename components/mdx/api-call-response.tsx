@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { Code } from './code';
+import { CodeBasic } from './code-basic';
 
 type Option = {
   label: string;
@@ -52,7 +52,7 @@ export const ApiCallResponse = ({ options }: Props) => {
           <button
             type="button"
             key={option.label}
-            className="font-medium transition-colors hover:text-accent dark:hover:text-accent-dark"
+            className="font-semibold transition-colors hover:text-accent dark:hover:text-accent-dark"
             onClick={() => fetchData(option)}
           >
             {option.label}
@@ -60,7 +60,7 @@ export const ApiCallResponse = ({ options }: Props) => {
         ))}
       </div>
 
-      <Code>{loading ? 'Fetching data...' : data}</Code>
+      <CodeBasic>{loading ? 'Fetching data...' : data}</CodeBasic>
     </div>
   );
 };

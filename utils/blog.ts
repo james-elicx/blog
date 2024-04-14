@@ -29,6 +29,7 @@ export const getBySlug = cache(async (slug: string) => {
       createdAt: coerceDate(frontmatter.created_at),
       updatedAt: coerceDate(frontmatter.updated_at),
       slug,
+      ogImage: frontmatter.og_image,
     },
     content,
   };
@@ -55,4 +56,5 @@ type Frontmatter = {
   created_at: Date;
   updated_at: Date;
   hidden?: boolean;
+  og_image?: string;
 };

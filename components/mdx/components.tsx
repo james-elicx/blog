@@ -1,4 +1,5 @@
 import type { MDXRemoteProps } from 'next-mdx-remote/rsc';
+import { twMerge } from 'tailwind-merge';
 
 import { ApiCallResponse } from './api-call-response';
 import { Code } from './code';
@@ -28,16 +29,23 @@ export const mdxComponents: MDXRemoteProps['components'] = {
       )}
     </div>
   ),
-  InlineGroup: ({ children, ...props }) => (
-    <div className="flex w-full flex-row flex-wrap items-center gap-4" {...props}>
+  InlineGroup: ({ children, shouldAlignToStart = false, ...props }) => (
+    <div
+      className={twMerge(
+        'flex w-full flex-row flex-wrap gap-4',
+        !shouldAlignToStart && 'items-center',
+      )}
+      {...props}
+    >
       {children}
     </div>
   ),
-  code: (props) => <Code isInline {...props} />,
+  code: (props) => <Code {...props} />,
+  pre: (props) => <pre className="contents" {...props} />,
   h2: ({ children, ...props }) => (
     <h2 className="mt-2" {...props}>
       {children}
     </h2>
   ),
-  ApiCallResponse,
+  ApiCallResponse: (props) => <ApiCallResponse {...props} />,
 };
