@@ -1,0 +1,95 @@
+---
+title: 'Monorepos: Being a Good Citizen'
+description: Working in a monorepo can be challenging, but it doesn't need to be.
+author: James
+created_at: 2024-09-06T22:00:07Z
+updated_at: 2024-09-06T22:00:07Z
+---
+
+Monorepos can be challenging. Well, I guess it depends on how you set things up. People can be challenging. Everyone has opinions - we're software engineers, it's what our entire profession revolves around... and money.
+
+Now, I'm not saying you're guaranteed to have a hard life in a monorepo. Quite the opposite. Life in a monorepo can be great - it just depends on how teams work in one.
+
+If you work in front-end at all, you'll probably understand why monorepos can be helpful. Have a design system? Shared utilities? Shared APIs? Dealing with versioning alone would be a nightmare if you had to use polyrepos for many different web apps.
+
+Every time you updated a part of your design system, you'd need to upgrade all the consumers to use the new version. Or you'd hope that they upgrade it themselves, but maybe they don't have time for that. Oh wait. Nevermind. Now your consumers are 10 versions out of sync and upgrading the latest version would require a significant amount of time. So, umm, have fun? You get the idea. Monorepos are quite useful for frontend teams.
+
+That's not the point of this article though - I'm not here to debate monorepos vs polyrepos.
+
+# Well, what is the point?
+
+A large portion of the friction and problems that arise when using monorepos can come from how teams and individuals work within them. You can often end up with a different culture and attitude between teams.
+
+As an example, you might have a member of one team who reviews every PR within 30 minutes. Meanwhile, another team might take several hours to even acknowledge a request for a review.
+
+So, what can we do about it? Try and be a good citizen of course. Everyone has a part to play.
+
+# Being a good citizen in a monorepo
+
+This isn't going to be a list of cliches. I can promise you that much. This is all based on my personal experience working within monorepos with others. Some of the monorepos I've worked in have gone well, others not much.
+
+It's about a mindset. A culture. Collaboration. You know, pull out a bunch of words that recruiters like to emphasize, then imagine that they actually existed for once.
+
+_"I am not a great programmer, I am just a good programmer with great habits"_ - random redditor.
+
+## Pull requests: small, focused, and ready\*
+
+Why the asterisk? Well, not everyone waits until a pull request is ready before asking for a review. This is something I've noticed a fair few times. Good etiquette would dictate that you should not waste the time of others if a PR is not ready for them to review.
+
+- Keep PRs small - consider targeting a maximum of 400-700 lines per PR.
+- Break them down into manageable chunks.
+- When someone requests a review from you, acknowledge it. Knowing that someone is looking at, or will look at, your PR is invaluable.
+- Aim to review a PR within 1-2 hours. If it has to be longer, communicate this.
+- Don't mark a pull request as ready for review until your PR checks are passing. _Please!_
+- For UI changes, ensure your visual regression checks pass before requesting reviews.
+- Make sure to leverage draft mode - some people use notifications to know when a PR needs their review.
+- Include info about the changes in the PR description.
+- Avoid scope creep (or make a separate PR for it).
+
+When you're waiting for reviews for a change, you are essentially blocked. Your team mates and the other individuals that need to review the PR can unblock you. But in order to unblock you, they need to review your PR.
+
+It harms everyone when people don't review PRs. Think of it as a way to enable others to be the best that they can be. You share your feedback on their work, but enable them to be unblocked.
+
+You don't just need to approve a PR. No. You should look for opportunities to improve aspects of the code. We all learn from seeing how other people approach problems. You may have a completely different perspective to someone else that you work with. Enabling individuals to be the best that they can is crucial to working effectively with others.
+
+You shouldn't look at a request and pass it off to someone else on your team. Everyone should be part of the process. Everyone should be getting involved and looking at other people's work, regardless of skill level, abilities, or contextual awareness.
+
+## Self-review before peer-review
+
+The art of the self-review. It's a great practice to get into the habit of.
+
+Whenever you are making a change, you should always _mark your own work_. Check out what you've done. Look at the diff. Try and think about it from the eyes of any other reviewer.
+
+You're not judging how pretty the code you've written is. You're looking at it as if you were looking at any other pull request. What do you think? Were there things that slipped through the cracks? Maybe you've noticed a potential optimization, or an infamous debug log.
+
+It is important to take a look at your work before you ask others to. You might spot a silly mistake that you can fix before asking others to invest time in looking at what you're done.
+
+There's another benefit to self-reviewing though. You might find areas where you can leave comments to better explain the choices made, or the reasoning behind certain changes. This can help other reviews understand what's going on instead of having to ask lots of questions.
+
+## E2E failures and flaky tests are incidents 🚨
+
+Blocked pipelines suck. It stops everyone from being able to do their work. You can't merge PRs. Your checks won't pass. People start to get frustrated.
+
+When an E2E test starts failing for whatever reason, it's an incident. Whether it's running against production or not, it doesn't matter. Treat it like an incident, get the on-call folks investigating. Either figure out what's broken ASAP, or skip the E2E to unblock other teams.
+
+Failures can happen for a variety of reasons; API reliability, incorrect data, service downtime, third-party incidents, several other related reasons, and last but not least, a code change in the repo.
+
+Flaky tests are another issue. Similarly to E2E tests breaking, flaky unit/integration tests should be treated as incidents. Skip it and fix it once people are unblocked.
+
+If it blocks other teams, it's an incident. Simple.
+
+## Become a Git expert
+
+The final thing I want to touch on is Git. Unless you just stepped out of a time machine from the early 2000s, you're probably going to be using Git for your monorepo.
+
+I cannot stress enough how important it is to understand your tooling. Git can be a weapon if used correctly. Umm, the good kind. Are there good kinds? I don't know. But you get the idea. It's a powerful beast.
+
+Learn how to do everything with the command-line, not some abstraction in a UI. Create aliases for your favorite commands to make your life easier.
+
+You should know how to see what the last commit was, how you might undo a commit, or un-stage files. Rebasing is also a relatively simple process once you've taken it for a spin. Learn how to use Git effectively and it will make like easier.
+
+# Conclusion
+
+Being a good citizen in a monorepo doesn't have to be hard. If we are all good citizens and seek to work well together, working in a monorepo can be a great experience. But it starts with the people. That's the most important aspect.
+
+Get the people and the culture right, and everything else comes together and works like a charm.
