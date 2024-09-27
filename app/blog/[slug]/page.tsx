@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { IntlDate } from '@/components';
+import { IntlDate } from '@/components/typography';
 import { getAllSlugs, getBySlug } from '@/utils/blog';
 
 type Props = { params: { slug: string } };

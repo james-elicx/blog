@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
-import { Grid, IntlDate, Section } from '@/components';
+import { Grid, Section } from '@/components/blocks';
+import { IntlDate } from '@/components/typography';
 import { getRecentPosts } from '@/utils/blog';
 import { getProjects } from '@/utils/projects';
 
