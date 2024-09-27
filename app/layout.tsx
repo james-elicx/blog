@@ -5,7 +5,9 @@ import Link from 'next/link';
 
 import type { Metadata } from 'next';
 
-import { GithubLogo, ThemeProvider, ThemeToggle, TopNav, TwitterLogo } from '@/components';
+import { GithubLogo, TwitterLogo } from '@/components/icons';
+import { TopNav } from '@/components/nav';
+import { ThemeProvider, ThemeToggle } from '@/components/providers';
 
 const TASAOrbiterText = localFont({
   variable: '--font-tasa-orbiter-text',
