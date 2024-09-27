@@ -73,12 +73,33 @@ A common, widely-accepted name to use for the entry point of a composable compon
 
 So, if we were to mock out some JSX for the above component, we could end up with something like the following if we were strictly following the Figma structure:
 
-<Image
-  src="/images/an-introduction-to-component-composition-by-example/3-jsx-outline.png"
-  alt="An initial draft of a mock JSX outline that is a literal translation of the Figma structure."
-  width={1316}
-  height={1124}
-/>
+```tsx
+<ArticleBlock.Root alignment="center">
+  <ArticleBlock.Image src="..." />
+  <ArticleBlock.Content alignment="center">
+    <ArticleBlock.LargeTitle>...</ArticleBlock.LargeTitle>
+    <ArticleBlock.MediumTitle>...</ArticleBlock.MediumTitle>
+    <ArticleBlock.SmallTitle>...</ArticleBlock.SmallTitle>
+    <ArticleBlock.SubTitle>...</ArticleBlock.SubTitle>
+    <ArticleBlock.CopyText>...</ArticleBlock.CopyText>
+    <ArticleBlock.SubText>...</ArticleBlock.SubText>
+    <ArticleBlock.Row>
+      <ArticleBlock.Pill variant="...">...</ArticleBlock.Pill>
+      <ArticleBlock.SubText>...</ArticleBlock.SubText>
+    </ArticleBlock.Row>
+  </ArticleBlock.Content>
+  <ArticleBlock.RowOrColumn>
+    <ArticleBlock.Link href="...">...</ArticleBlock.Link>
+    <ArticleBlock.Link variant="..." href="...">
+      ...
+    </ArticleBlock.Link>
+  </ArticleBlock.RowOrColumn>
+</ArticleBlock.Root>
+```
+
+<SubText>
+  An initial draft of a mock JSX outline that is a literal translation of the Figma structure.
+</SubText>
 
 You may or may not spot some areas in this JSX where there is room for improvement. That is okay. Building out things like this may be an iterative process some times - we don't always start with the best version, but we can certainly make adjustments to reach a better approach.
 
@@ -86,24 +107,25 @@ There are a several areas of this initial draft that are worth focusing on that 
 
 #### Image Component
 
-<Image
-  src="/images/an-introduction-to-component-composition-by-example/4-jsx-outline-image.png"
-  alt="The initial version of our composable Image component."
-  width={726}
-  height={266}
-/>
+```tsx
+<ArticleBlock.Image src="..." />
+```
+
+<SubText>The initial version of our composable Image component.</SubText>
 
 The Image component in our composable API does not necessarily adhere to some of the standards that we are aiming to achieve with composition. It is imposing assumptions about the underlying image component that should be used for rendering the actual image, when it does not need to.
 
 Instead, we could use this component as a wrapper with some styling that a developer can then use with their own Image component.
 
-<Image
-  src="/images/an-introduction-to-component-composition-by-example/5-jsx-outline-image-after.png"
-  alt="The final version of our composable Image component after making improvements to the API."
-  width={558}
-  height={368}
-  skipAspectRatioProp
-/>
+```tsx
+<ArticleBlock.Image>
+  <Image src="..." />
+</ArticleBlock.Image>
+```
+
+<SubText>
+  The final version of our composable Image component after making improvements to the API.
+</SubText>
 
 With this approach, we are able to separate our highly reusable wrapper that provides styling, from the image component itself. Instead of making our component depend on a specific implementation for rendering images, we are providing our consumer with the chance to make the choice about what they use. This prevents it from being tightly coupled to a specific implementation, and allows it to be more flexible.
 
@@ -113,12 +135,13 @@ This keeps the component dumb, more reusable, and removes any assumptions it mig
 
 #### Title Components
 
-<Image
-  src="/images/an-introduction-to-component-composition-by-example/6-jsx-outline-title.png"
-  alt="The initial version of our composable Title components."
-  width={1100}
-  height={368}
-/>
+```tsx
+<ArticleBlock.LargeTitle>...</ArticleBlock.LargeTitle>
+<ArticleBlock.MediumTitle>...</ArticleBlock.MediumTitle>
+<ArticleBlock.SmallTitle>...</ArticleBlock.SmallTitle>
+```
+
+<SubText>The initial version of our composable Title components.</SubText>
 
 In the JSX that we mocked up above, it was a literal translation of the structure that was used in the Figma design. In this design, there are three different versions of a Title component. These can be compressed into one component with multiple variants — a concept that you might already be familiar with.
 
@@ -126,12 +149,15 @@ There is another aspect to these components that is worth thinking about with co
 
 To achieve this, we might expose a level property, that allows the consumer to pass in their own heading level to use, as well as the size for the title, whether it be small, medium, or large. In the even that no level property is supplied to our component, we could fall back to using a paragraph element.
 
-<Image
-  src="/images/an-introduction-to-component-composition-by-example/7-jsx-outline-title-after.png"
-  alt="The final version of our composable Title components after making improvements to the API."
-  width={1218}
-  height={368}
-/>
+```tsx
+<ArticleBlock.Title size="lg" level={1}>...</ArticleBlock.Title>
+<ArticleBlock.Title size="md" level={2}>...</ArticleBlock.Title>
+<ArticleBlock.Title size="sm" level={2}>...</ArticleBlock.Title>
+```
+
+<SubText>
+  The final version of our composable Title components after making improvements to the API.
+</SubText>
 
 We are maintaining the options that we should afford to a consumer of our component, while restricting the type of title to match what our Figma designs dictate should be available.
 
@@ -139,21 +165,22 @@ We are maintaining the options that we should afford to a consumer of our compon
 
 There are times when you may need to expose your own wrapper around another core component that exists in your design system, in order to prevent use of other variants in your composable component.
 
-<Image
-  src="/images/an-introduction-to-component-composition-by-example/8-jsx-outline-pill.png"
-  alt="The initial version of our composable Pill component."
-  width={1098}
-  height={274}
-/>
+```tsx
+<ArticleBlock.Pill variant="...">...</ArticleBlock.Pill>
+```
+
+<SubText>The initial version of our composable Pill component.</SubText>
 
 In this example, that is not necessary. Instead of exposing our own ArticleBlock.Pill, and ArticleBlock.Link, we can allow the consumer to use existing components from our design system, as we would just be exporting the existing component otherwise.
 
-<Image
-  src="/images/an-introduction-to-component-composition-by-example/9-jsx-outline-pill-after.png"
-  alt="The final version of our composable Pill component that uses the Pill from the design system instead."
-  width={696}
-  height={272}
-/>
+```tsx
+<Pill variant="...">...</Pill>
+```
+
+<SubText>
+  The final version of our composable Pill component that uses the Pill from the design system
+  instead.
+</SubText>
 
 This is an area where composition is really powerful. It allows you to plug-and-play with different components. If one's use case needed a Pill component to be used, they could slot that inside the container at their will, without it explicitly needing to be part of our API.
 
@@ -163,12 +190,15 @@ What if we came back in the future and wanted to conduct an experiment where we 
 
 #### SubText Component
 
-<Image
-  src="/images/an-introduction-to-component-composition-by-example/10-jsx-outline-subtext.png"
-  alt="The SubText component from our composable API being consumed multiple times."
-  width={1124}
-  height={458}
-/>
+```tsx
+<ArticleBlock.SubText>...</ArticleBlock.SubText>
+<ArticleBlock.Row>
+  <ArticleBlock.Pill variant="...">...</ArticleBlock.Pill>
+  <ArticleBlock.SubText>...</ArticleBlock.SubText>
+</ArticleBlock.Row>
+```
+
+<SubText>The SubText component from our composable API being consumed multiple times.</SubText>
 
 You might notice that we are using a SubText component in two places. This highlights another strength of composition-based approaches. We are able to reuse our component in multiple places at our own will, depending on what our use-case requires, without JS conditions trying to figure out where it should be used.
 
@@ -190,12 +220,41 @@ On the flip side, we might choose to use the name ArticleBlock.ResponsiveGroup i
 
 Below is the final draft outline that we have ended up with for what our component's API might look like. There is one notable difference that we have not discussed yet; the alignment property is only present on the Root, and not present on the Body. We will take a look at the reasons behind this in the next section.
 
-<Image
-  src="/images/an-introduction-to-component-composition-by-example/11-jsx-outline-final.png"
-  alt="The final draft of our mock JSX outline after making improvements and adjustments."
-  width={1278}
-  height={1228}
-/>
+```tsx
+<ArticleBlock.Root alignment="center">
+  <ArticleBlock.Image>
+    <Image src="..." />
+  </ArticleBlock.Image>
+  <ArticleBlock.Body>
+    <ArticleBlock.Title size="lg" level={1}>
+      ...
+    </ArticleBlock.Title>
+    <ArticleBlock.Title size="md" level={2}>
+      ...
+    </ArticleBlock.Title>
+    <ArticleBlock.Title size="sm" level={2}>
+      ...
+    </ArticleBlock.Title>
+    <ArticleBlock.SubTitle level={3}>...</ArticleBlock.SubTitle>
+    <ArticleBlock.BodyCopy>...</ArticleBlock.BodyCopy>
+    <ArticleBlock.SubText>...</ArticleBlock.SubText>
+    <ArticleBlock.InlineGroup>
+      <Pill variant="...">...</Pill>
+      <ArticleBlock.SubText>...</ArticleBlock.SubText>
+    </ArticleBlock.InlineGroup>
+  </ArticleBlock.Body>
+  <ArticleBlock.ResponsiveGroup>
+    <Link href="...">...</Link>
+    <Link variant="secondary" href="...">
+      ...
+    </Link>
+  </ArticleBlock.ResponsiveGroup>
+</ArticleBlock.Root>
+```
+
+<SubText>
+  The final draft of our mock JSX outline after making improvements and adjustments.
+</SubText>
 
 Now, this might not be exactly what your final composable API looks like; it could change while you build it, and may well do so.
 
@@ -215,50 +274,99 @@ These three approaches are all based around the same concept and are different w
 
 In our Root component, we could use a data attribute to store the alignment property for our component.
 
-<Image
-  src="/images/an-introduction-to-component-composition-by-example/12-style-data-attribute-jsx.png"
-  alt="An example of how to use a data attribute in a JSX component to store a property for reuse in CSS."
-  width={1234}
-  height={844}
-/>
+```tsx
+type RootProps = React.PropsWithChildren<{
+  alignment: 'center' | 'left' | 'right';
+}>;
+
+const Root = ({ alignment = 'center', children }: RootProps) => (
+  <div data-alignment={alignment} className="article-block">
+    {children}
+  </div>
+);
+
+const Body = ({ children }: React.PropsWithChildren) => (
+  <div className="article-block__body">{children}</div>
+);
+```
+
+<SubText>
+  An example of how to use a data attribute in a JSX component to store a property for reuse in CSS.
+</SubText>
 
 This alignment value on our root would then be accessible in any of our child components in the CSS, using attribute selectors.
 
 If we wanted to align items in our body container to the centre when our root component had a prop passed to it for the alignment, we could add a rule to our body's class name that is based on the alignment property on our root.
 
-<Image
-  src="/images/an-introduction-to-component-composition-by-example/13-style-data-attibute-css.png"
-  alt="An example of CSS code that does conditional styles based on a data attribute."
-  width={1186}
-  height={602}
-/>
+```css
+.article-block__body {
+  display: flex;
+  flex-direction: column;
+}
+
+.article-block[data-alignment='center'] .article-block__body {
+  align-items: center;
+}
+```
+
+<SubText>An example of CSS code that does conditional styles based on a data attribute.</SubText>
 
 Users of Tailwind CSS might be familiar with this as something offered by Tailwind's group utility class.
 
-<Image
-  src="/images/an-introduction-to-component-composition-by-example/14-style-data-attribute-tailwind.png"
-  alt="A Tailwind CSS example of styling child components with a parent component's data attribute."
-  width={1432}
-  height={844}
-/>
+```tsx
+type RootProps = React.PropsWithChildren<{
+  alignment: 'center' | 'left' | 'right';
+}>;
+
+const Root = ({ alignment = 'center', children }: RootProps) => (
+  <div data-alignment={alignment} className="group">
+    {children}
+  </div>
+);
+
+const Body = ({ children }: React.PropsWithChildren) => (
+  <div className="group data-[alignment=center]:items-center">{children}</div>
+);
+```
+
+<SubText>
+  A Tailwind CSS example of styling child components with a parent component's data attribute.
+</SubText>
 
 ### Class Names
 
 Similarly, the previous approach could be done with class names that represent the current alignment, rather than data attributes.
 
-<Image
-  src="/images/an-introduction-to-component-composition-by-example/15-style-class-names-jsx.png"
-  alt="An example of how to use a class names in a JSX component to store a property for reuse in CSS."
-  width={1308}
-  height={746}
-/>
+```tsx
+type RootProps = React.PropsWithChildren<{
+  alignment: 'center' | 'left' | 'right';
+}>;
 
-<Image
-  src="/images/an-introduction-to-component-composition-by-example/16-style-class-names-css.png"
-  alt="An example of CSS code that does conditional styles based on a class name."
-  width={1000}
-  height={606}
-/>
+const Root = ({ alignment = 'center', children }: RootProps) => (
+  <div className={`article-block align-${alignment}`}>{children}</div>
+);
+
+const Body = ({ children }: React.PropsWithChildren) => (
+  <div className="article-block__body">{children}</div>
+);
+```
+
+<SubText>
+  An example of how to use a class names in a JSX component to store a property for reuse in CSS.
+</SubText>
+
+```css
+.article-block__body {
+  display: flex;
+  flex-direction: column;
+}
+
+.article-block.align-center .article-block__body {
+  align-items: center;
+}
+```
+
+<SubText>An example of CSS code that does conditional styles based on a class name.</SubText>
 
 ### CSS Variables
 
@@ -266,21 +374,53 @@ While the previous approach works, there is another way to think about this with
 
 In our root component, we could define a CSS variable that specifies the alignment to use. This variable could then be used in each of our containers.
 
-<Image
-  src="/images/an-introduction-to-component-composition-by-example/17-style-css-variables-jsx.png"
-  alt="An example of how to use CSS Variables in a JSX component to store a property for reuse in CSS."
-  width={1232}
-  height={1614}
-/>
+```tsx
+type RootProps = React.PropsWithChildren<{
+  alignment: 'center' | 'left' | 'right';
+}>;
+
+const getAlignment = (alignment: RootProps['alignment']) => {
+  switch (alignment) {
+    case 'left':
+      return 'flex-start';
+    case 'right':
+      return 'flex-end';
+    case 'center':
+    default:
+      return 'center';
+  }
+};
+
+const Root = ({ alignment = 'center', children }: RootProps) => (
+  <div
+    style={{
+      '--article-block-alignment': getAlignment(alignment),
+    }}
+  >
+    {children}
+  </div>
+);
+
+const Body = ({ children }: React.PropsWithChildren) => (
+  <div className="article-block__body">{children}</div>
+);
+```
+
+<SubText>
+  An example of how to use CSS Variables in a JSX component to store a property for reuse in CSS.
+</SubText>
 
 In our CSS, we can then use this scoped CSS variable to define our alignment for the body container’s styling.
 
-<Image
-  src="/images/an-introduction-to-component-composition-by-example/18-style-css-variables-css.png"
-  alt="An example of CSS code that does conditional styles based on a CSS Variable."
-  width={942}
-  height={462}
-/>
+```css
+.article-block__body {
+  display: flex;
+  flex-direction: column;
+  align-items: var(--article-block-alignment);
+}
+```
+
+<SubText>An example of CSS code that does conditional styles based on a CSS Variable.</SubText>
 
 Side Note: This one might be my favourite approach, depending on the use case.
 
@@ -292,12 +432,45 @@ This component does not need to share state, but an example that might could be 
 
 To access this callback from one of the children, you would need to use React context so that you could share the callback.
 
-<Image
-  src="/images/an-introduction-to-component-composition-by-example/19-sharing-state.png"
-  alt="An example of JSX code that shares state between parent and child components using React context."
-  width={1406}
-  height={1808}
-/>
+```tsx
+type Context = {
+  onValueChange: (value: string) => void;
+};
+
+const DropdownContext = createContext<Context>({
+  onValueChange: () => {},
+});
+
+type RootProps = React.PropsWithChildren<{
+  onValueChange: (value: string) => void;
+}>;
+
+type ItemProps = React.PropsWithChildren<{ value: string }>;
+
+const Root = ({ children, onValueChange }: RootProps) => {
+  const providerValue = useMemo(() => ({ onValueChange }), [onValueChange]);
+
+  return (
+    <DropdownContext.Provider value={providerValue}>
+      <div>{children}</div>
+    </DropdownContext.Provider>
+  );
+};
+
+const Item = ({ children, value }: ItemProps) => {
+  const { onValueChange } = useContext(DropdownContext);
+
+  return (
+    <button type="button" onClick={() => onValueChange(value)}>
+      {children}
+    </button>
+  );
+};
+```
+
+<SubText>
+  An example of JSX code that shares state between parent and child components using React context.
+</SubText>
 
 ## Closing Thoughts
 
