@@ -1,4 +1,14 @@
 import type { MDXRemoteProps } from 'next-mdx-remote/rsc';
+import { twMerge } from 'tailwind-merge';
+
+import { ApiCallResponse } from './api-call-response';
+import { Code } from './code';
+
+const SubText = ({ children }: React.PropsWithChildren) => (
+  <span className="text-center text-xs text-secondary/50 dark:text-secondary-dark/50">
+    {children}
+  </span>
+);
 
 export const mdxComponents: MDXRemoteProps['components'] = {
   Image: ({ skipAspectRatioProp, ...props }) => (
@@ -18,27 +28,27 @@ export const mdxComponents: MDXRemoteProps['components'] = {
         style={{ maxHeight: props.height && `${props.height}px` }}
         className="h-full w-full max-w-fit rounded-md border border-secondary object-scale-down dark:border-secondary-dark"
       />
-      {props.alt && (
-        <p className="text-center text-xs text-secondary/50 dark:text-secondary-dark/50">
-          {props.alt}
-        </p>
-      )}
+      {props.alt && <SubText>{props.alt}</SubText>}
     </div>
   ),
-  InlineGroup: ({ children, ...props }) => (
-    <div className="flex w-full flex-row items-center gap-4" {...props}>
+  InlineGroup: ({ children, shouldAlignToStart = false, ...props }) => (
+    <div
+      className={twMerge(
+        'flex w-full flex-row flex-wrap gap-4',
+        !shouldAlignToStart && 'items-center',
+      )}
+      {...props}
+    >
       {children}
     </div>
   ),
-  code: (props) => (
-    <code
-      className="rounded-md border-2 border-accent/30 bg-secondary/30 px-1 py-0.5 font-mono text-sm transition-colors hover:border-accent/50 dark:border-accent-dark/30 dark:bg-secondary-dark/30 dark:hover:border-accent-dark/50"
-      {...props}
-    />
-  ),
+  code: (props) => <Code {...props} />,
+  pre: (props) => <pre className="contents" {...props} />,
   h2: ({ children, ...props }) => (
     <h2 className="mt-2" {...props}>
       {children}
     </h2>
   ),
+  ApiCallResponse: (props) => <ApiCallResponse {...props} />,
+  SubText,
 };
