@@ -33,7 +33,7 @@ const Page = async () => {
                   />
                 </div>
 
-                <span className="text-base">{post.description}</span>
+                {/* <span className="text-base">{post.description}</span> */}
               </div>
             ))
           ) : (
