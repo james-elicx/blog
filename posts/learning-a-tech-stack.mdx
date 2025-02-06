@@ -1,0 +1,205 @@
+---
+title: Learning a Tech Stack
+description: Learn languages faster with effective problem-solving.
+author: James
+created_at: 2024-11-06T22:00:07Z
+updated_at: 2024-11-06T22:00:07Z
+---
+
+One of the things that interests me is figuring out exactly how something works. If I don't know how it works, I'm not satisfied. If I can understand exactly what's going on, and figure out how I would re-implement everything myself, well, then I'm happy (or going insane).
+
+I imagine there's a lot of engineers who feel the same way.
+
+I mean, our job is about problem solving. How do you solve a problem. Well, you figure out exactly what's going on, then try and understand how you can do something to fix it. Of course, there's normally a lot more to it, but at a high level, it's about figuring out how something works, then figuring out how you'd fix that thing.
+
+There's a similar theme between the two. I guess the first is just taking it to the nth degree though. Not necessarily a bad thing though if you enjoy it.
+
+## Problem Solving
+
+_"learning problem solving, but in a specific language"_
+
+That phrase either clicks, or it doesn't. I interpret it as: You can solve problems, but you're not sure how it translates into the language/stack that you're trying to solve the problem in.
+
+Maybe that makes a bit more sense.
+
+Most engineers will be really good problem solvers. Give them a problem and some time to think, and they'll give you a pretty good high-level solution. It might be completely over the top sometimes, but they'll come up with something that gets the job done.
+
+Ask them to implement this with a language they've never used before though, and the gears might grind to a halt.
+
+This is of course perfectly normal - if you have no idea what the syntax for a language is, you can't exactly start churning out code. You could try, but you'll probably run into a bunch of syntax errors and might get frustrated.
+
+### Breaking it Down
+
+I have a way that I like to approach this when I'm unfamiliar with something. It starts with first trying to break down what I want to implement.
+
+You start with a fairly high-level idea. It'd probably help to use an example here, so let's come up with a requirement you might see at a job:
+
+> The company has decided to build a new feature that will help customers understand how much money it will cost if they want to buy products on a page that they already have in a list of saved items.
+>
+> There should be a count in the top corner of the page that says: "Total cost for saved items on page is £50.00", where the price represents the total cost.
+>
+> The API is not able to do this, so the feature needs to be built entirely on the frontend. The API for saved items will give you all of the product IDs. The page already uses a separate API to get the products for the current page's category.
+
+So, what are we going to do?
+
+Well, we have the requirements for our new feature, so lets break down what's needed.
+
+- We get a list of all of the products for the current page, using an API.
+- We get a list of product IDs that the customer has saved, using an API.
+- We need to figure out the price for all of the products that appear in the saved list, and also appear on the current page.
+- We need to display this total price on the page.
+
+As we break this down, we can start to see different ways of dealing with the data.
+
+If you can't, that's okay. Think about how you might interact with each of these in pseudo-code - for instance, you might need a function for each step.
+
+Some super dodgy pseudo code could look this:
+
+```
+pageProducts = getPageProducts()
+savedProductIDs = getSavedProductIDs()
+totalPrice = calculatePriceForProductsInList(pageProducts, savedProductIDs)
+
+render("Total cost for saved items on page: " + totalPrice)
+```
+
+The code base that you are working in will probably already have an established way of fetching data, so we'll skip over that part - lets just assume that our functions to fetch data from the API are fine.
+
+#### Taking it a Step Further
+
+The part we're interested in is the `calculatePriceForProductsInList(pageProducts, savedProductIDs)` function.
+
+At the moment, it doesn't help us understand how it might be implemented. We can try and further break this down.
+
+What does it need to do? Well, based on the requirements that we broke down earlier, we know that it needs to figure out the prices for the products in our list of saved products.
+
+- We have a list of products.
+- We have a list of products ids.
+- For the products that match the product ids, we want to add up the prices.
+
+If we try and think about how might turn this into instructions, we have two ways to approach it:
+
+1. For each of our saved products ids, we need to find a product in the list of page products, and then we need to add the price to the total.
+2. For each of the page products, we need to add the price to the total if the id is in the list of saved product ids.
+
+#### Translating it to Code
+
+We have now arrived at the final part of breaking down the problem - writing the code.
+
+If you aren't too familiar with the language you are using, this is the part where you have an opportunity to understand new bits of the syntax, or the different features available.
+
+Lets look at the two potential solutions that we have broken down above.
+
+Both approaches start with doing an action for each entry. We are iterating through a list. For this, we could use a for loop to go through the list.
+
+```ts
+for (const item of list) {
+  // do something
+}
+```
+
+##### Approach 1
+
+If we take a look at our first approach, the next step we identified was finding a product in the products list.
+
+```ts
+// go through each item in the list
+for (const pid of savedProductIds) {
+  // find an entry in the page products list.
+  // this could be done by using a built-in array method for finding a specific item if the language supports it.
+  const product = pageProducts.find((p) => p.id === pid);
+}
+```
+
+Aftwards, we need to add the price of the product we found.
+
+```ts
+// create a variable to track the price
+let totalPrice = 0;
+
+// go through each item in the list
+for (const pid of savedProductIds) {
+  // find an entry in the page products list.
+  // this could be done by using a built-in array method for finding a specific item if the language supports it.
+  const product = pageProducts.find((p) => p.id === pid);
+
+  // if we found a product, we add the price to the variable we made.
+  if (product) {
+    totalPrice += product.price;
+  }
+}
+```
+
+##### Approach 2
+
+The second approach starts its next step with thinking about where we want to end up.
+
+At the end, we want to have added the price to a total. But we only want to do this if the id is in a list of saved product ids.
+
+Therefore, we switch around how we were iterating over our list.
+
+```ts
+// create a variable to track the price
+let totalPrice = 0;
+
+// go through each item in the list
+for (const product of pageProducts) {
+  // check if the product is in the saved list.
+  // if it is, we add the price to our variable.
+  if (savedProductIds.includes(product.id)) {
+    totalPrice += product.price;
+  }
+}
+```
+
+There are a few different ways we could approach this using a language's features.
+
+For example, there is another way of storing product ids that we could use. Some languages have something called a Set. It allows you to store something like a product id, and look up it.
+
+```ts
+// create a set of saved products ids
+const savedProductIds = new Set(savedProductIdsList);
+
+for (const product of pageProducts) {
+  // lets look up our product id in the set, instead of looping through the entire list of saved product ids.
+  if (savedProductIds.has(product.id)) {
+    totalPrice += product.price;
+  }
+}
+```
+
+Depending on the amount of products that a customer has saved, using a set could be more efficient due to how it works.
+
+Another way we could think about calculating our price is using a different type of loop.
+
+In languages like TypeScript, we can loop over a list, but we can perform actions that create a new value. There is a method called reduce that we could leverage here.
+
+We can run a reduce operation on an array, and it would give us access to what is called an accumulator, and the current item in the list. The accumulator is just the previous value that was returned by the reduce function. We can also provide an initial value.
+
+```ts
+// create a set of saved products ids
+const savedProductIds = new Set(savedProductIdsList);
+
+// calculate the total price of the saved produces.
+const totalPrice = pageProducts.reduce((accumulator, product) => {
+  if (savedProductIds.has(product.id)) {
+    // the accumulator represents the total price.
+    return accumulator + product.price;
+  }
+  // our initial total price is 0
+}, 0);
+```
+
+In these examples, we've looked at using a set, but you could also use other ways of storing data like a map, which may be used to store the page products. Then, you could iterate over the saved product ids and use the map to access the products for each product id.
+
+### Take Lots of Notes
+
+The key to sticking with things over time is making lots of notes.
+
+If you learn something new, write a little note somewhere.
+
+Have a note taking app where you write everything that you're learning, even if it's just a short bullet-point.
+
+Keeping a log of things you learn can be really helpful when looking back on what you've done. Suppose you forget a specific technique. All you need to do is check your notes.
+
+Seriously, making notes of things you learn can be super helpful.
