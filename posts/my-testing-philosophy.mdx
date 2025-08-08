@@ -1,0 +1,59 @@
+---
+title: My Testing Philosophy
+description: Why you should prioritise integration tests over low-value, high-friction unit tests.
+author: James
+created_at: 2025-08-08T22:00:00Z
+updated_at: 2025-08-08T22:00:00Z
+---
+
+Being in software engineering is like being in an opinion business. Everyone has them and is constantly trying to get you to buy into their view on stylistic guidelines, ways to structure code, and different design patterns.
+
+If you don't like integration tests, you might want to consider closing the page and getting some time back because (spoiler alert) they're my preferred approach.
+
+I stand by two principles when I think about testing:
+
+1. Achieving high confidence.
+2. Enabling low friction.
+
+What does this mean though?
+
+### High confidence
+
+I subscribe to the idea that unit tests are pointless. Let me explain. Testing individual units of code in an isolated manner doesn't provide you with any confidence that your code works when it's plugged together, especially if you mock functionality that has already been tested.
+
+It's a classic problem.
+
+People often mock the lower-level parts of their functions, or the things they depend on, and in the process often risk breaking the contract between the two.
+
+If you do something like `jest.mock('...', () => ({ fn: () => ({ ... }) }))`, you generally won't have any type safety, and any changes in the function's API will result in failures and (if it gets to prod) potentially incidents.
+
+Unit tests typically aren't testing how functionality works when it's all stitched together. You know, the thing that your end-user interacts with.
+
+Integration tests are different. They are testing that different pieces of code work when they interact with each other - it's testing the integrations.
+
+When comparing the degree of confidence you get by mocking and testing individual units of code, versus the degree of confidence you can achieve by testing how everything interacts with one another, well, it's night and day.
+
+Any mocks that do happen should be for IO (e.g. file-system operations) and network requests. That's it. In other words, the lowest possible level that they can be pushed down.
+
+As a result, you get much higher confidence that your service actually works, because you're testing proper end-to-end functionality.
+
+### Low friction
+
+Integration tests also make it drastically easier to refactor portions of your codebase.
+
+If you have to change a test, or the behaviour it's testing, it often means that your refactor is changing how the code works, or that you have too many tests that are making assumptions about the behaviour of other functionality.
+
+This can happen a lot when focusing on unit tests, but often as a red herring, whereas with integration tests, well, you don't have 20 different unit tests to update with each refactor. In fact, you shouldn't be touching a test file at all, because the tests are covering the full flow, and your refactoring shouldn't break how the service works.
+
+Code coverage should be achieved through integration tests as well; if it's not possible for an integration tests to touch a line of code, it's not possible for an end-user to. It's as simple as that really.
+
+If it's impossible to craft an API request that goes down a specific branch in the code, your end-users won't be able to ever reach that branch of code. Why does that branch of code exist if it can't be reached? Instead of writing a unit test for it, try and figure out the answer to the question.
+
+### Summary
+
+So, this is my philosophy:
+
+- Aim for high confidence and low friction.
+- Stop chasing coverage metrics with brittle tests that make maintenance harder in the long-term.
+- Build a robust suite of integration tests that verify your system works the way your users experience it.
+- Spend less time maintaining tests and more time shipping features with real confidence.
