@@ -46,9 +46,4 @@ export const getProjects = (): Project[] => [
     href: 'https://github.com/james-elicx/go-utils',
     desc: 'Various utility functions for use in Go projects and when writing tests.',
   },
-  {
-    name: 'etherexplorer',
-    href: 'https://etherexplorer.io',
-    desc: 'Minimal Ethereum blockchain explorer.',
-  },
 ];

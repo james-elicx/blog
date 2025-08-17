@@ -1,0 +1,13 @@
+---
+title: Distributive Omit
+description: Omit a property from an object in a union, preserving the union types.
+author: James
+created_at: 2025-08-17T12:00:00Z
+updated_at: 2025-08-17T12:00:00Z
+---
+
+```ts
+export type DistributiveOmit<T, K extends keyof T> = T extends unknown
+  ? Omit<T, K>
+  : never;
+```

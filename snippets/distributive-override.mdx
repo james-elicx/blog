@@ -1,0 +1,14 @@
+---
+title: Distributive Override
+description: Override a property in an object in a union, preserving the union types.
+author: James
+created_at: 2025-08-17T12:00:00Z
+updated_at: 2025-08-17T12:00:00Z
+---
+
+```ts
+export type DistributiveOverride<
+  T,
+  K extends { [key in keyof T]?: unknown },
+> = T extends { [key in keyof K]?: unknown } ? Override<T, K> : T;
+```

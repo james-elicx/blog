@@ -1,4 +1,5 @@
 const sharedColors = {
+  current: 'currentColor',
   accent: { DEFAULT: '#2ab9d5', dark: '#7fd5e6' },
 };
 
@@ -43,6 +44,10 @@ module.exports = {
 
       screens: {
         xs: '475px',
+      },
+
+      borderWidth: {
+        1: '1px',
       },
     },
   },
