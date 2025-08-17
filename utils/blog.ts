@@ -7,18 +7,21 @@ import { compileMDX } from 'next-mdx-remote/rsc';
 
 import { mdxComponents } from '@/components/mdx';
 
-const postsDir = resolve('posts');
+export const postsDir = resolve('posts') as 'posts';
+export const snippetsDir = resolve('snippets') as 'snippets';
+
+type Dir = typeof postsDir | typeof snippetsDir;
 
 const coerceDate = (date: string | Date) => (date instanceof Date ? date : new Date(date));
 
-export const getAllSlugs = () =>
-  readdirSync(postsDir)
+export const getAllSlugs = (dir: Dir) =>
+  readdirSync(dir)
     .filter((path) => /\.mdx?$/.test(path))
     .map((path) => ({ slug: path.replace(/\.mdx$/, '') }));
 
-export const getBySlug = cache(async (slug: string) => {
+export const getBySlug = cache(async (dir: Dir, slug: string) => {
   const { frontmatter, content } = await compileMDX<Frontmatter>({
-    source: readFileSync(resolve(postsDir, `${slug}.mdx`), 'utf8'),
+    source: readFileSync(resolve(dir, `${slug}.mdx`), 'utf8'),
     options: { parseFrontmatter: true },
     components: mdxComponents,
   });
@@ -35,11 +38,13 @@ export const getBySlug = cache(async (slug: string) => {
   };
 });
 
-export const getAllPosts = async () =>
-  Promise.all(getAllSlugs().map(({ slug }) => getBySlug(slug)));
+export const getAllPosts = async (dir: Dir) =>
+  Promise.all(getAllSlugs(dir).map(({ slug }) => getBySlug(dir, slug))).then((v) =>
+    v.sort((a, b) => (a.meta.createdAt > b.meta.createdAt ? -1 : 1)),
+  );
 
-export const getRecentPosts = async (count = 5) => {
-  const posts = await getAllPosts();
+export const getRecentPosts = async (dir: Dir, count = 5) => {
+  const posts = await getAllPosts(dir);
 
   return posts
     .map(({ meta }) => meta)

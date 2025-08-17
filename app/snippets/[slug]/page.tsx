@@ -1,12 +1,11 @@
 import type { Metadata } from 'next';
 
-import { IntlDate } from '@/components/typography';
-import { getAllSlugs, getBySlug, postsDir } from '@/utils/blog';
+import { getAllSlugs, getBySlug, snippetsDir } from '@/utils/blog';
 
 type Props = { params: { slug: string } };
 
 export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
-  const { meta } = await getBySlug(postsDir, params.slug);
+  const { meta } = await getBySlug(snippetsDir, params.slug);
 
   return {
     title: meta.title,
@@ -24,16 +23,14 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
 };
 
 const Page = async ({ params }: Props) => {
-  const { content, meta } = await getBySlug(postsDir, params.slug);
+  const { content, meta } = await getBySlug(snippetsDir, params.slug);
 
   return (
     <>
       <div className="flex flex-col gap-1">
         <h1>{meta.title}</h1>
 
-        <div className="flex flex-row justify-between text-sm text-secondary/80 dark:text-secondary-dark/80">
-          <IntlDate date={meta.updatedAt} />
-        </div>
+        <p>{meta.description}</p>
       </div>
 
       <div className="flex flex-col gap-4">{content}</div>
@@ -42,6 +39,6 @@ const Page = async ({ params }: Props) => {
 };
 
 export const dynamicParams = false;
-export const generateStaticParams = async () => getAllSlugs(postsDir);
+export const generateStaticParams = async () => getAllSlugs(snippetsDir);
 
 export default Page;

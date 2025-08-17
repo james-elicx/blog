@@ -2,13 +2,18 @@
 
 import Giscus from '@giscus/react';
 
-export const Comments = () => (
+type CommentsWidgetProps = {
+  category: string;
+  categoryId: string;
+};
+
+export const CommentsWidget = ({ category, categoryId }: CommentsWidgetProps) => (
   <Giscus
     id="comments"
     repo="james-elicx/blog"
     repoId="R_kgDOKA2v8g"
-    category="Blog Posts"
-    categoryId="DIC_kwDOKA2v8s4CcatM"
+    category={category}
+    categoryId={categoryId}
     mapping="pathname"
     term="Welcome to @giscus/react component!"
     reactionsEnabled="0"

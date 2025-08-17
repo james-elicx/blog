@@ -1,0 +1,14 @@
+---
+title: Distributive Intersect
+description: Intersect an object with each object in a union, preserving the union types.
+author: James
+created_at: 2025-08-17T12:00:00Z
+updated_at: 2025-08-17T12:00:00Z
+---
+
+```ts
+export type DistributiveIntersect<
+  T,
+  K extends { [key in keyof T]?: unknown },
+> = T extends unknown ? Omit<T, keyof K> & K : never;
+```
