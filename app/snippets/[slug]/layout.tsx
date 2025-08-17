@@ -1,6 +1,7 @@
+import Link from 'next/link';
+
 import { CommentsWidget } from '@/components/comments';
 import { ArrowLeft } from '@/components/icons';
-import Link from 'next/link';
 
 const Layout = ({ children }: React.PropsWithChildren) => (
   <>

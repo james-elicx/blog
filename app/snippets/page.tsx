@@ -1,7 +1,9 @@
+import Link from 'next/link';
+
+import type { Metadata } from 'next';
+
 import { Grid, Section } from '@/components/blocks';
 import { getAllPosts, snippetsDir } from '@/utils/blog';
-import { Metadata } from 'next';
-import Link from 'next/link';
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const allSnippets = await getAllPosts(snippetsDir);
@@ -12,7 +14,9 @@ export const generateMetadata = async (): Promise<Metadata> => {
     openGraph: {
       title: 'Snippets',
       description: 'Code snippets and examples',
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       publishedTime: `${allSnippets[allSnippets.length - 1]!.meta.created_at}`,
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       modifiedTime: `${allSnippets[0]!.meta.created_at}`,
     },
   };
