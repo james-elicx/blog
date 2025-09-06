@@ -1,0 +1,107 @@
+---
+title: Preventing Change-Related Incidents
+description: Eliminating human-related change failure through processes and automation.
+author: James
+created_at: 2025-09-06T22:00:07Z
+updated_at: 2025-09-06T22:00:07Z
+---
+
+The title isn't strictly true - you can never truly get rid of all change failure.
+
+However, you can eliminate most human-related failures.
+
+Human-related failure means incidents that are caused by a change that a human made, where the cause was specifically related to the actions taken or code written as part of that change.
+
+These types of incidents should be avoidable. For most teams though, they're never truly set up to eliminate them.
+
+Organisations that deal with financial transactions almost never have major public incidents. There's a reason behind this; they set up their processes in such a way that it becomes nearly impossible for a bad change to be released to the general public.
+
+Most organisations don't necessarily invest the time or money that it takes to reach this level of stability.
+
+How can we get there?
+
+## Integration Testing
+
+I have previously written [another blog post](/blog/my-testing-philosophy) on what I consider to be my testing philosophy where I aim for a high confidence but low friction approach to testing things. This means that I generally prefer using integration tests over unit tests, but there's a very good reason behind this.
+
+Integration tests can actually give us an incredibly high level of confidence in the code that we're writing.
+
+If you were to think about a change to an API, well, you could be changing some of the internal functionality, but you don't know that when the change is combined with various other bits of functionality, that it continues to provide the same behaviour that you had before.
+
+This is where integration tests can come in. You can test all of the different areas of your application, and the full flow for the user's behaviour as a single test, and use this to measure the coverage metrics in your application.
+
+To give a better example, all of an API's test coverage should be achieved through making API requests that an end user would be able to make.
+
+## Replaying User Traffic
+
+Another way to achieve a high level of confidence is through replaying traffic that has been captured or monitored from your users.
+
+There is no better way to know how a user might make a request and the different variations that they could look like than actual user requests.
+
+A financial transactions company, for example, might have their release processes involve replaying millions of user transactions in a very short period of time, to simulate real traffic and validate that the API works as expected.
+
+This can be really crucial for fintech companies and trading firms, as their business revolves around very specific user transactions working 100% of the time, with no chance of error. Failures for even just a minute can result in millions of dollars of losses, and so the best way to validate that APIs still support those requests is through simulating significant amounts of real user traffic.
+
+## Gradual Rollouts
+
+Gradual rollouts are a way to release a change to a small percentage of traffic and have that increase over time.
+
+In the event that something were to go wrong with a release, a gradual rollout would allow you to know very quickly that there's an issue, without affecting all of your user base.
+
+While we should strive to never be in a position where we are deploying something that could go bad in production, that chance does still exist. A gradual rollout can help us minimise the risk for each deployment.
+
+This is a useful approach to use in conjunction with integration tests and simulating traffic, as you can validate that the change works as expected for a small percentage of users, and then increase the percentage over time.
+
+## Pre-Mortems
+
+When larger changes do need to happen, there are activities that teams can do to help prepare and plan for what might happen.
+
+You might often hear about something referred to as a "pre-mortem". It's like a post-mortem, but it happens beforehand. It's a way to think about what could possibly go wrong, before something actually does go wrong.
+
+Planning for failure is a great way to reduce the chance of failure, because it forces you to think about what could go wrong, and how you might mitigate that risk.
+
+Typically, a pre-mortem will involve a group of people getting together and brainstorming all of the different things that could go wrong with a change, whether is be an infrastructure issue, a bug in the code, or something else entirely.
+
+The team can then come up with a plan to mitigate those risks, whether it be through additional testing, monitoring, or other means.
+
+## Continuous Integration and Continuous Deployment
+
+CI/CD is way to automate the process of building, testing, and deploying code changes.
+
+By automating this process, we can ensure that every change goes through the same testing and validation process before it reaches production.
+
+Historically, there would be a business function that did quality assurance manually, and you would then cut a release every few weeks after it had been thoroughly manually tested.
+
+This is, of course, very inefficient and it actually increases your risk level.
+
+Release windows increase your risk level due to deploying significantly more changes in a single release. It's much more challenging to understand exactly what could go wrong, or what does go wrong in the event that something bad happens. It's also very hard to test everything when there are so many changes that might affect each other, or changes that modify the same bits of behaviour.
+
+As a result, teams moved towards automated workflows that would take care of running a series of automated tests, validating different behaviours, and then managing the deployment of that change to production.
+
+Smaller, more frequent releases have been proven throughout the industry to reduce risk levels, while simultaneously increasing the speed at which you can deliver value to your users.
+
+Another key reason to favour automation here is because humans make mistakes. By automating the processes, we can remove the chance for humans to make mistakes that may have happened in the past.
+
+## Tests for Bug Fixes
+
+When a bug is found in production, it's important to write a test that reproduces the bug, and then validate that the fix for that bug actually resolves the issue.
+
+Many times when engineers pick up a bug to fix, they'll find a quick fix for the actual issue, but they may not spend the time to write new tests (whether they be integration or unit tests) that ensure a regression does not happen in the future.
+
+Writing a test for bug fixes ensures that the scenario that led to the bug cannot happen again in the future - if it does, the test will fail.
+
+## Figure Out Root Causes
+
+When an incident does happen, it's important to figure out the _actual_ root cause.
+
+I say "actual" because it's very easy to point a finger and say that a line of code caused an issue. That doesn't necessarily mean that it was the root cause though.
+
+The way that I approach root causes is I don't think about it from what a human did. Because humans can always make mistakes. But what was the system or process that allowed the human to make a mistake? For me, that is how you can identify the actual root cause for an incident.
+
+I don't think humans are the root cause most of the time. I think the root cause should be considered to be the process that didn't stop the human from causing an issue.
+
+So if we use a bug being introduced in an API through a code change, for example. Why would that be able to be introduced? Well, it could be that we didn't have a sufficient level of integration tests that covered those scenarios in our pipeline, and so our automated testing did not catch that scenario. And therefore, the engineer was able to make that change.
+
+In this case, the root cause could be considered to be an insufficient level of testing. That isn't anything to do with the engineer's change, and it isn't necessarily anything to do with changes done by people in the past. It could be that the pipeline was never set up in such a way that it requires integration tests to cover all the possible scenarios, and that could be the root cause of our issue.
+
+By focusing on the processes and systems that allow humans to make mistakes, we can identify the actual root causes of incidents and work to improve those processes to prevent similar incidents from happening in the future.
