@@ -6,8 +6,8 @@ import { getRecentPosts, postsDir, snippetsDir } from '@/utils/blog';
 import { getProjects } from '@/utils/projects';
 
 const Page = async () => {
-  const recentPosts = await getRecentPosts(postsDir);
-  const recentSnippets = await getRecentPosts(snippetsDir);
+  const recentPosts = await getRecentPosts(postsDir, 10);
+  const recentSnippets = await getRecentPosts(snippetsDir, 3);
   const projects = getProjects();
 
   return (
