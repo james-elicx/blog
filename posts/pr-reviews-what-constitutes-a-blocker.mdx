@@ -1,0 +1,68 @@
+---
+title: 'PR Reviews: What Constitutes a Blocker?'
+description: Not every review comment is a blocker. Here's how to tell the difference, and how to keep the review process productive.
+author: James
+created_at: 2026-02-20T18:30:00Z
+updated_at: 2026-02-20T18:30:00Z
+---
+
+Reviewing pull requests is generally part of working with a team, and helps raise the bar for code quality and maintainability.
+
+Not everyone will have the same views or opinions, and that's okay.
+
+As engineers, we should be able to have open and honest discussions about our code, and give and receive feedback in a constructive way.
+
+It's how we grow and improve - we don't learn by being perfect.
+
+That being said, there are some common themes that emerge.
+
+It's important to remember that not every review comment is a blocker, and not every blocker is a review comment.
+
+A blocker is something that prevents the code from being merged, and should be addressed before a PR can be approved and merged.
+
+Some common examples of blockers include:
+
+- Failing tests.
+- Logic bugs.
+- Security vulnerabilities.
+- Performance issues.
+- Violations of coding standards or best practices.
+
+Some of these may be subjective, and others may be addressable via automated tools, but it's important to have a clear understanding of what constitutes a blocker in your team or organization.
+
+Where possible, leaning on linters, formatters, and CI checks to enforce standards can help remove the human element from subjective debates around style and formatting. If the machine enforces it, we don't need to argue about it.
+
+It's also worth keeping in mind that blockers are not personal attacks, and should be addressed in a constructive way.
+
+If there's a genuine disagreement on whether something is a blocker, it can help to talk it through synchronously rather than going back and forth in comments. Sometimes a quick conversation, or bringing in a third opinion, can resolve things much faster.
+
+Where the line may be drawn is when a review comment is not actionable, or is based on personal preferences rather than objective criteria.
+
+For example, if a reviewer comments on the variable naming convention, but the code is otherwise clean and follows the team's coding standards, that may not be a blocker.
+
+Similarly, if a reviewer wants the code to be refactored in a way that is not necessary for the functionality or maintainability of the code, that may not be a blocker.
+
+Other examples may include things like:
+
+- Requesting stylistic changes (naming, formatting, code structure) that conflict with or go beyond the team's agreed-upon standards.
+- Suggesting an alternative approach or architecture that isn't demonstrably better than the current one.
+- Asking for code comments that don't add meaningful clarity.
+- Asking to change pre-existing behaviour or functionality that is unrelated to the purpose of the PR.
+
+One thing that can help here is labelling your review comments. Prefixing a comment with something like `nit:`, `blocker:`, or `suggestion:` makes your intent clear, and removes a lot of the ambiguity around whether something needs to be addressed before merging.
+
+It's worth remembering that the author plays a role here too. Writing clear PR descriptions, keeping PRs small and focused, and providing context for decisions all go a long way in reducing subjective or off-topic feedback. The easier a PR is to understand, the more likely the review will focus on what actually matters.
+
+Most engineers are not trying to be difficult or nitpicky, and are just trying to help improve the code and the team.
+
+Nitpicks can be helpful, but they should be balanced with the need to get code merged and shipped in a timely manner.
+
+Approving a PR while leaving non-blocking suggestions is also a great way to keep things moving. It signals trust in the author, and avoids the PR sitting in limbo while minor points are discussed.
+
+It's also more than reasonable to address nitpicks and non-blockers in a follow-up PR, especially if the changes are not critical to the functionality or maintainability of the code.
+
+There will always be some subjectivity in what constitutes a blocker, and that's fine.
+
+What matters is that your team has a shared understanding of where the line is, and that everyone feels comfortable having honest conversations about code.
+
+At the end of the day, we're all trying to ship good code to customers. The review process should help us do that, not get in the way of it.
