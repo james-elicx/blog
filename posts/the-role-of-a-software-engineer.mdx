@@ -1,0 +1,105 @@
+---
+title: The Role of a Software Engineer
+description: Software engineering isn't what it used to be, and it's not going back.
+author: James
+created_at: 2026-06-14T22:00:00Z
+updated_at: 2026-06-14T22:00:00Z
+---
+
+I never expected to end up at a point where I was no longer writing the majority of the code I was shipping to production.
+
+If I compare how I was working 8 months ago to how I'm working today, it's a completely different world.
+
+I've been thinking a lot recently about what my job actually is these days.
+
+There's no denying that it's changed drastically. It's been months since I hand-wrote a feature or a bug fix myself. That's the same for a lot of people I speak to.
+
+### Our role no longer involves writing an implementation.
+
+Software engineering, as it used to be defined, no longer feels like it exists.
+
+Rather, the way that I've been thinking about this recently, is that most software engineers are moving into **highly technical product management** roles.
+
+Looking back, this kind of makes a lot of sense.
+
+The best software engineers were often the ones who cared deeply about the product they were building. The way it worked. The way it was architected. The way different systems were interacting with one another. The way people used it. Heck, they even care about engaging with their users!
+
+For many people, a career as a software engineer was never just about being paid to do a job - it was about the impact they were having. The ownership. The responsibility. The technical leadership. The influence on the direction things were moving in. The scale.
+
+To be completely transparent, I never really considered people who wrote code solely for the above average pay to be actual engineers. For me, the idea of _engineering_ something implies a level of care, love, and responsibility -- and one that I don't consider writing code solely for a paycheck to be compatbile with. I do this because it's my hobby, not because I saw a paycheck.
+
+You might say, "wasn't that the role of a staff software engineer, or a principal", and historically, you may be right (depending on the company) - the people who fit that bill might have had that title, but it never really reflected the kind of care they had over what they were responsible for.
+
+With AI-generated code though, that dynamic changes. Software engineering was often about trying to figure out how to implement something in order to solve a problem.
+
+The implementation is now a lot cheaper than it used to be - humans don't have to spend hours writing code when an LLM can achieve the same outcome.
+
+You may not like that outcome, or the style in which is was written, but the reality is that it works, and it's _good enough_ as a contribution.
+
+The more time you spend working in a team, or on a project that multiple people contribute to, the more you come to realise that while many people in software engineering have strong opinions, they are often loosly held. You don't block work over it not aligning wiht a specific style that you prefer.
+
+If you're interested, I previously [wrote another post](/blog/pr-reviews-what-constitutes-a-blocker) about my approach to PR reviews and blockers.
+
+The more engineers delegate work to an LLM to implement, the less they should be considered engineers, and the more they should be considered technical managers of a product.
+
+You are no longer responsible for the specific implementation of a piece of functionality. You are responsible for the outcome (which you were responsbile for before as well).
+
+This is somewhat similar to the way that you might work within a team as a technical lead for a project - your job isn't to tell people exactly how to implement something.
+
+You are responsible for the wider architecture, system design, prioritisation, technical roadmap, etc.
+
+When you think about the different roles that people in a team traditionally held, you are shifting more towards guiding how a product is architected, and the priorities for that product, and less about how those things are implemented.
+
+For this reason, I very much consider software engineering to be moving towards highly technical product management.
+
+### What does this look like though?
+
+Well, one person being responsible for figuring out the priorities of a project, the roadmap for it, guiding the architecture of the system(s).
+
+Instead of delegating work to humans, you delegate work to agents. The rather unique part about this, though, is that they aren't human (duh), and it doesn't matter if they produce something that is garbage, because you can throw it away and have the agent start over.
+
+There are no feelings involved in agentic workflows. No people to spend hours aligning with, or carefully worded thoughts to avoid upsetting someone - just an agent that has no concept of emotion or feelings. Don't like the outcome? Delete the session. Start over from scratch. When you look at it like that, the dynamic of a team also changes -- you are no longer balancing human emotion when reviewing the work, because agents aren't humans. It doesn't matter what their work looks like - they can always start over without it impacting morale, and you can write whatever you want in a review comment.
+
+This ultimately enables a higher velocity for engineers - they can move faster, because they can have multiple pieces of work in-flight at any one time, without having to worry about the way the agent writing the implementation feels.
+
+Want them to change their direction? Tell them. It doesn't matter. Agents don't have the capacity to care about how time is spent.
+
+It's a more _brutal_/blunt form of management.
+
+### Humans still matter.
+
+Working in silos is not sustainable.
+
+Agents have no concept of thinking. They predict patterns in token streams.
+
+To this end, human interaction is still important. You still need a team around you that you can bounce ideas off of.
+
+The interesting thing to think about, though, is what that looks like.
+
+Instead of 5 humans working on a project, it might make more sense to have 1 human and 10 agents working on a project, where that human is overseeing the work those agents are doing, now that models are capable of well-reasoned implementations.
+
+I first flirted with this idea about 8 months ago, when I was working on modernising legacy software. In the 5 months that I was working on that project, I never once wrote the code in a pull request myself - it was all authored by agents that I was guiding down a direction. And there were only two of us in the team, both focused on completely different pieces of work.
+
+Instead, teams may be formed of people that all work on their own projects with agents, but communicate and collaborate together at a high level, bouncing ideas off of one another, despite not strictly working on the same project, but rather working on loosely related projects.
+
+This is often how platform teams inevitably end-up being structured in my experience - several different projects, with each one generally being owned by a single person (or two), due to how the team is resourced.
+
+### What about new people entering the industry?
+
+That's a good question.
+
+It's also one it feels like no one has really figured out yet.
+
+To be honest, I don't have an answer.
+
+I grew up writing code. When I was in primarily school, I was attempting to make websites with HTML and CSS. When I entered my teenage years, I was trying to figure out how to make Minecraft plugins. By the time I finished high school, I was trying to figure out how to make desktop apps. As I went through university, I spent my time figuring out how web applications and browsers worked.
+
+For me, at its core, software engineering means understanding how things work. Being able to figure out the solutions to problems.
+
+When you use AI, you don't do any of that. In fact, you don't really know how to figure out what's going on if you've never written code yourself.
+
+For me, that's the most concerning thing about this shift towards agent-driven engineering.
+
+**How can people learn to debug problems when there's an internet outage, if the only way they built software was through agents?**
+
+I wish I had the answer, but I don't.
